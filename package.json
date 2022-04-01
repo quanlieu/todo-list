@@ -68,6 +68,9 @@
   "jest": {
     "coveragePathIgnorePatterns": [
       "<rootDir>/src/apis",
+      "<rootDir>/src/App.tsx",
+      "<rootDir>/src/index.tsx",
+      "<rootDir>/src/reportWebVitals.ts",
       "/*actions.ts/",
       "/*reducers.ts/",
       "/*selectors.ts/",

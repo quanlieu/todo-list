@@ -27,7 +27,7 @@ function TodoTable() {
     dispatch(actions.getTodoListStart());
   }, [dispatch]);
 
-  const handleDoneClick = (todo: ITodo) => {
+  const handleToggle = (todo: ITodo) => {
     dispatch(actions.toggleTodoStart(todo));
   };
 
@@ -94,7 +94,8 @@ function TodoTable() {
                   variant="outline-secondary"
                   className="m-1"
                   disabled={updateStatus === LOADING}
-                  onClick={() => handleDoneClick(v)}
+                  data-testid={`toggle-btn-${v.uuid}`}
+                  onClick={() => handleToggle(v)}
                 >
                   {v.done ? 'Undone' : 'Done'}
                 </Button>{' '}
@@ -108,6 +109,7 @@ function TodoTable() {
                   variant="outline-danger"
                   className="m-1"
                   onClick={() => handleDeleteClick(v.uuid)}
+                  data-testid={`delete-btn-${v.uuid}`}
                 >
                   Delete
                 </Button>

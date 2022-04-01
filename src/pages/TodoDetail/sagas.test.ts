@@ -1,4 +1,4 @@
-import { all, call, put } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 import { AxiosResponse } from 'axios';
 
 import { getTodo, newTodo, updateTodo } from './sagas';
@@ -8,8 +8,6 @@ import {
   actions as toastActions,
   VARIANT,
 } from '../../containers/Toast/actions';
-import { ITodo } from '../../types/todo';
-import { OPEN, CONFIRMED, FALSE_POSITIVE, FIXED } from '../../constants/lists';
 
 const error = {
   errorMessage: 'Error',

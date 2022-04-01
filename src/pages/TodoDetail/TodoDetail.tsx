@@ -17,7 +17,7 @@ import { ITodoPost } from '../../types/todo';
 
 const formSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
-  note: Yup.string()
+  note: Yup.string(),
 });
 
 function TodoDetail() {
@@ -105,6 +105,7 @@ function TodoDetail() {
             <Form.Control
               type="text"
               placeholder="Title"
+              data-testid="title-input"
               {...register('title', { required: true })}
             />
           </Form.Group>
@@ -113,17 +114,15 @@ function TodoDetail() {
             <Form.Control
               type="text"
               placeholder="Note"
+              data-testid="note-input"
               {...register('note', { required: true })}
             />
           </Form.Group>
           <Button
             variant="primary"
             type="submit"
-            disabled={
-              !formState.isValid ||
-              !formState.isDirty ||
-              createUpdateStatus === LOADING
-            }
+            disabled={!formState.isValid || createUpdateStatus === LOADING}
+            data-testid="submit-btn"
           >
             Submit
           </Button>

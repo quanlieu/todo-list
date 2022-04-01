@@ -20,10 +20,15 @@ function Modal(props: IProps) {
       </ReactBootstrapModal.Header>
       <ReactBootstrapModal.Body>{children}</ReactBootstrapModal.Body>
       <ReactBootstrapModal.Footer>
-        <Button variant="secondary" onClick={onClose}>
+        <Button variant="secondary" onClick={onClose} data-testid="cancel-btn">
           Cancel
         </Button>
-        <Button variant="primary" onClick={onSubmit} disabled={disableSubmit}>
+        <Button
+          variant="primary"
+          onClick={onSubmit}
+          disabled={disableSubmit}
+          data-testid="confirm-btn"
+        >
           Confirm
         </Button>
       </ReactBootstrapModal.Footer>
