@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 
 import { useModal } from '../../hooks/useModal';
+import ConfirmModal from '../../components/ConfirmModal/ConfirmModal';
 import { actions } from './actions';
 import { IDLE, LOADING } from '../../constants/status';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
@@ -19,15 +20,27 @@ function TodoTable() {
   const { loadingStatus, deleteStatus, todos } =
     useAppSelector(selectTodoStore);
 
+  const [modalOpen, setModalOpen, modalState, setModalState] = useModal(false);
+
   useEffect(() => {
     dispatch(actions.getTodoListStart());
   }, [dispatch]);
 
-  const handleDoneClick = (uuid: string) => {
-  };
+  const handleDoneClick = (uuid: string) => {};
 
   const handleDeleteClick = (uuid: string) => {
+    setModalOpen(true);
+    setModalState({ uuid });
   };
+
+  const deleteTodo = useCallback(() => {
+    dispatch(actions.deleteTodoStart(modalState as { uuid: string }));
+    setModalOpen(false);
+  }, [dispatch, setModalOpen, modalState]);
+
+  const closeModal = useCallback(() => {
+    setModalOpen(false);
+  }, [setModalOpen]);
 
   if (loadingStatus === IDLE || loadingStatus === LOADING) {
     return <Spinner animation="border" role="status" />;
@@ -35,6 +48,12 @@ function TodoTable() {
 
   return (
     <Container>
+      <ConfirmModal
+        onSubmit={deleteTodo}
+        onClose={closeModal}
+        processing={deleteStatus === LOADING}
+        show={modalOpen || deleteStatus === LOADING}
+      />
       <Row>
         <Col>
           <h2>All todos</h2>

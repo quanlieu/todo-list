@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import TodoTable from './pages/TodoTable/TodoTable';
+import Toast from './containers/Toast/Toast';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -7,6 +8,7 @@ import './App.css';
 function App() {
   return (
     <BrowserRouter>
+      <Toast />
       <Routes>
         <Route path="/todos" element={<TodoTable />} />
         <Route path="/" element={<Navigate replace to="/todos" />} />

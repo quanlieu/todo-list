@@ -28,7 +28,7 @@ export const actions = {
   todoReset: () => ({
     type: types.TODO_LIST_RESET,
   }),
-  doneTodoStart: (payload: { id: string }) => ({
+  doneTodoStart: (payload: { uuid: string }) => ({
     type: types.DONE_TODO_START,
     payload,
   }),
@@ -38,7 +38,7 @@ export const actions = {
   doneTodoFailed: (payload: object) => ({
     type: types.DONE_TODO_FAILED,
   }),
-  deleteTodoStart: (payload: { id: string }) => ({
+  deleteTodoStart: (payload: { uuid: string }) => ({
     type: types.DELETE_TODO_START,
     payload,
   }),

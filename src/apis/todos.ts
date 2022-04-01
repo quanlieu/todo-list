@@ -5,8 +5,8 @@ export const getTodos = () => {
   return http.get<ITodo[]>('todos');
 };
 
-export const getTodo = (id: string) => {
-  return http.get<ITodo>(`todos/${id}`);
+export const getTodo = (uuid: string) => {
+  return http.get<ITodo>(`todos/${uuid}`);
 };
 
 export const postTodo = (payload: ITodoForm) => {

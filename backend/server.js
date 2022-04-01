@@ -18,6 +18,12 @@ let todoList = [
     note: 'Note note note',
     done: true,
   },
+  {
+    uuid: 'def',
+    title: 'Lorem ipsum dolor',
+    note: 'Note note note',
+    done: false,
+  },
 ];
 
 // Route
