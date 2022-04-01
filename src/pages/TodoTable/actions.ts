@@ -1,13 +1,13 @@
-import { ITodo } from "../../types/todo";
+import { ITodo } from '../../types/todo';
 
 export const types = {
   LOAD_TODO_LIST_START: 'LOAD_TODO_LIST_START',
   LOAD_TODO_LIST_SUCCESS: 'LOAD_TODO_LIST_SUCCESS',
   LOAD_TODO_LIST_FAILED: 'LOAD_TODO_LIST_FAILED',
   TODO_LIST_RESET: 'TODO_LIST_RESET',
-  DONE_TODO_START: 'DONE_TODO_START',
-  DONE_TODO_SUCCESS: 'DONE_TODO_SUCCESS',
-  DONE_TODO_FAILED: 'DONE_TODO_FAILED',
+  TOGGLE_TODO_START: 'TOGGLE_TODO_START',
+  TOGGLE_TODO_SUCCESS: 'TOGGLE_TODO_SUCCESS',
+  TOGGLE_TODO_FAILED: 'TOGGLE_TODO_FAILED',
   DELETE_TODO_START: 'DELETE_TODO_START',
   DELETE_TODO_SUCCESS: 'DELETE_TODO_SUCCESS',
   DELETE_TODO_FAILED: 'DELETE_TODO_FAILED',
@@ -28,15 +28,16 @@ export const actions = {
   todoReset: () => ({
     type: types.TODO_LIST_RESET,
   }),
-  doneTodoStart: (payload: { uuid: string }) => ({
-    type: types.DONE_TODO_START,
+  toggleTodoStart: (payload: ITodo) => ({
+    type: types.TOGGLE_TODO_START,
     payload,
   }),
-  doneTodoSuccess: () => ({
-    type: types.DONE_TODO_SUCCESS,
+  toggleTodoSuccess: () => ({
+    type: types.TOGGLE_TODO_SUCCESS,
   }),
-  doneTodoFailed: (payload: object) => ({
-    type: types.DONE_TODO_FAILED,
+  toggleTodoFailed: (payload: object) => ({
+    type: types.TOGGLE_TODO_FAILED,
+    payload,
   }),
   deleteTodoStart: (payload: { uuid: string }) => ({
     type: types.DELETE_TODO_START,
@@ -47,5 +48,6 @@ export const actions = {
   }),
   deleteTodoFailed: (payload: object) => ({
     type: types.DELETE_TODO_FAILED,
+    payload,
   }),
 };

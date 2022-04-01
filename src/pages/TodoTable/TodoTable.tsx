@@ -14,10 +14,11 @@ import { actions } from './actions';
 import { IDLE, LOADING } from '../../constants/status';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { selectTodoStore } from './selectors';
+import { ITodo } from '../../types/todo';
 
 function TodoTable() {
   const dispatch = useAppDispatch();
-  const { loadingStatus, deleteStatus, todos } =
+  const { loadingStatus, deleteStatus, updateStatus, todos } =
     useAppSelector(selectTodoStore);
 
   const [modalOpen, setModalOpen, modalState, setModalState] = useModal(false);
@@ -26,7 +27,9 @@ function TodoTable() {
     dispatch(actions.getTodoListStart());
   }, [dispatch]);
 
-  const handleDoneClick = (uuid: string) => {};
+  const handleDoneClick = (todo: ITodo) => {
+    dispatch(actions.toggleTodoStart(todo));
+  };
 
   const handleDeleteClick = (uuid: string) => {
     setModalOpen(true);
@@ -90,9 +93,10 @@ function TodoTable() {
                   size="sm"
                   variant="outline-secondary"
                   className="m-1"
-                  onClick={() => handleDoneClick(v.uuid)}
+                  disabled={updateStatus === LOADING}
+                  onClick={() => handleDoneClick(v)}
                 >
-                  Done
+                  {v.done ? 'Undone' : 'Done'}
                 </Button>{' '}
                 <Link to={v.uuid} state={v}>
                   <Button size="sm" variant="outline-secondary" className="m-1">

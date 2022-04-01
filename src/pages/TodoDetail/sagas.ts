@@ -1,43 +1,44 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { ITodo } from '../../types/todo';
-import { types, actions } from './actions';
 import * as todosApi from '../../apis/todos';
+import { types, actions } from './actions';
 import {
   actions as toastActions,
   VARIANT,
 } from '../../containers/Toast/actions';
+import { ITodo } from '../../types/todo';
 
-export function* getTodoList() {
+export function* getTodo(action: ReturnType<typeof actions.loadTodoStart>) {
   try {
-    const response: { data: ITodo[] } = yield call(todosApi.getTodos);
-    yield put(actions.getTodoListSuccess({ todos: response.data }));
+    const response: { data: ITodo } = yield call(
+      todosApi.getTodo,
+      action.payload.uuid
+    );
+    yield put(actions.loadTodoSuccess({ todo: response.data }));
   } catch (error: any) {
     yield put(
-      actions.getTodoListFailed({
+      actions.loadTodoFailed({
         errorMessage: error?.response?.data?.message || 'Error',
       })
     );
   }
 }
 
-export function* toggleTodo(
-  action: ReturnType<typeof actions.toggleTodoStart>
+export function* newTodo(
+  action: ReturnType<typeof actions.createNewTodoStart>
 ) {
   try {
-    const { uuid, done } = action.payload;
-    yield call(todosApi.patchTodo, { uuid, done: !done });
-    yield put(actions.toggleTodoSuccess());
-    yield put(actions.getTodoListStart());
+    yield call(todosApi.postTodo, action.payload);
+    yield put(actions.createNewTodoSuccess());
     yield put(
       toastActions.showToast({
         header: 'Success',
-        body: `Todo set to ${!done ? 'done' : 'undone'} success`,
+        body: 'Create new todo success',
         variant: VARIANT.LIGHT,
       })
     );
   } catch (error: any) {
     yield put(
-      actions.toggleTodoFailed({
+      actions.createNewTodoFailed({
         errorMessage: error?.response?.data?.message || 'Error',
       })
     );
@@ -51,23 +52,22 @@ export function* toggleTodo(
   }
 }
 
-export function* deleteTodo(
-  action: ReturnType<typeof actions.deleteTodoStart>
+export function* updateTodo(
+  action: ReturnType<typeof actions.updateTodoStart>
 ) {
   try {
-    yield call(todosApi.deleteTodo, action.payload.uuid);
-    yield put(actions.deleteTodoSuccess());
-    yield put(actions.getTodoListStart());
+    yield call(todosApi.patchTodo, action.payload);
+    yield put(actions.updateTodoSuccess());
     yield put(
       toastActions.showToast({
         header: 'Success',
-        body: 'Delete todo success',
+        body: 'Update todo success',
         variant: VARIANT.LIGHT,
       })
     );
   } catch (error: any) {
     yield put(
-      actions.deleteTodoFailed({
+      actions.updateTodoFailed({
         errorMessage: error?.response?.data?.message || 'Error',
       })
     );
@@ -81,10 +81,10 @@ export function* deleteTodo(
   }
 }
 
-const TodoSaga = [
-  takeEvery(types.LOAD_TODO_LIST_START, getTodoList),
-  takeEvery(types.TOGGLE_TODO_START, toggleTodo),
-  takeEvery(types.DELETE_TODO_START, deleteTodo),
+const TodoDetailSaga = [
+  takeEvery(types.LOAD_TODO_START, getTodo),
+  takeEvery(types.CREATE_NEW_TODO_START, newTodo),
+  takeEvery(types.UPDATE_TODO_START, updateTodo),
 ];
 
-export default TodoSaga;
+export default TodoDetailSaga;

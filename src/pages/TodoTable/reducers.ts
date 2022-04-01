@@ -18,7 +18,7 @@ export const initialState: ITodoState = {
   todos: [],
 };
 
-export default function homeReducer(
+export default function todoReducer(
   state: ITodoState = initialState,
   action: AnyAction
 ) {
@@ -40,17 +40,17 @@ export default function homeReducer(
         loadingStatus: FAILED,
         errorMessage: action.payload.errorMessage,
       };
-    case types.DONE_TODO_START:
+    case types.TOGGLE_TODO_START:
       return {
         ...state,
         updateStatus: LOADING,
       };
-    case types.DONE_TODO_SUCCESS:
+    case types.TOGGLE_TODO_SUCCESS:
       return {
         ...state,
         updateStatus: SUCCESS,
       };
-    case types.DONE_TODO_FAILED:
+    case types.TOGGLE_TODO_FAILED:
       return {
         ...state,
         updateStatus: FAILED,

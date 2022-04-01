@@ -2,6 +2,7 @@ import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { ITodoState } from '../pages/TodoTable/reducers';
+import { ITodoDetailState } from '../pages/TodoDetail/reducers';
 import { IToastState } from '../containers/Toast/reducers';
 import reducer from './root-reducer';
 import rootSaga from './root-sagas';
@@ -16,6 +17,7 @@ sagaMiddleware.run(rootSaga);
 
 export interface RootState {
   todo: ITodoState;
+  todoDetail: ITodoDetailState;
   toast: IToastState;
 }
 

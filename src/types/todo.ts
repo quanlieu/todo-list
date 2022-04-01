@@ -5,8 +5,14 @@ export interface ITodo {
   done: boolean;
 }
 
-export interface ITodoForm {
+export interface ITodoPost {
   title: string;
+  note?: string;
+}
+
+export interface ITodoPatch {
+  uuid: string;
+  title?: string;
   note?: string;
   done?: boolean;
 }

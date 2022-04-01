@@ -29,8 +29,8 @@ let todoList = [
 // Route
 app.get('/api/todos', (req, res) => res.json(todoList));
 
-app.get('/api/todos/:id', (req, res, next) => {
-  const todo = todoList.find((v) => v.uuid === req.params.id);
+app.get('/api/todos/:uuid', (req, res, next) => {
+  const todo = todoList.find((v) => v.uuid === req.params.uuid);
   if (!todo) {
     const err = new Error('Not Found');
     err.status = 404;
@@ -41,8 +41,8 @@ app.get('/api/todos/:id', (req, res, next) => {
 
 app.post('/api/todos', (req, res, next) => {
   const schema = Joi.object().keys({
-    title: Joi.string().min(1).required(),
-    note: Joi.string(),
+    title: Joi.string().min(1).max(25).required(),
+    note: Joi.string().allow('').optional(),
   });
   const { error: validationError } = Joi.validate(req.body, schema);
   if (validationError) {
@@ -50,9 +50,14 @@ app.post('/api/todos', (req, res, next) => {
     err.status = 400;
     return next(err);
   }
+  if (req.body.title === 'invalid') {
+    const err = new Error('Bad request');
+    err.status = 400;
+    return next(err);
+  }
   const todo = {
     uuid: faker.datatype.uuid(),
-    title: req.body.username,
+    title: req.body.title,
     note: req.body.note || '',
     done: false,
   };
@@ -60,18 +65,8 @@ app.post('/api/todos', (req, res, next) => {
   return res.status(200).send(todo);
 });
 
-app.patch('/api/todos/:id', (req, res, next) => {
-  const schema = Joi.object().keys({
-    title: Joi.string().min(1).required(),
-    note: Joi.string(),
-  });
-  const { error: validationError } = Joi.validate(req.body, schema);
-  if (validationError) {
-    const err = new Error('Bad request');
-    err.status = 400;
-    return next(err);
-  }
-  const todo = todoList.find((v) => v.uuid === req.params.id);
+app.patch('/api/todos/:uuid', (req, res, next) => {
+  const todo = todoList.find((v) => v.uuid === req.params.uuid);
   if (!todo) {
     const err = new Error('Not Found');
     err.status = 404;
@@ -89,14 +84,14 @@ app.patch('/api/todos/:id', (req, res, next) => {
   return res.status(200).send(todo);
 });
 
-app.delete('/api/todos/:id', (req, res, next) => {
-  const todo = todoList.find((v) => v.uuid === req.params.id);
+app.delete('/api/todos/:uuid', (req, res, next) => {
+  const todo = todoList.find((v) => v.uuid === req.params.uuid);
   if (!todo) {
     const err = new Error('Not Found');
     err.status = 404;
     return next(err);
   }
-  todoList = todoList.filter((v) => v.uuid !== req.params.id);
+  todoList = todoList.filter((v) => v.uuid !== req.params.uuid);
   return res.status(204).send();
 });
 
