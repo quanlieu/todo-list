@@ -4,7 +4,7 @@ const cors = require('cors');
 const Joi = require('joi');
 const { faker } = require('@faker-js/faker');
 
-const { PORT } = require('./config');
+const { API_PORT } = require('./config');
 
 const app = express();
 
@@ -105,4 +105,6 @@ app.use(function (err, req, res, next) {
   });
 });
 
-app.listen(PORT, () => console.log(`Your app is listening on port ${PORT}`));
+app.listen(API_PORT, () =>
+  console.log(`Your app is listening on port ${API_PORT}`)
+);

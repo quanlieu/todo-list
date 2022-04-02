@@ -1,3 +1,3 @@
 module.exports = {
-    PORT: process.env.PORT || 8080
+    API_PORT: process.env.API_PORT || 8080
 };
