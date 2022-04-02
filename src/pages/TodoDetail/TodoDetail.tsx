@@ -122,6 +122,7 @@ function TodoDetail() {
                 {...register('note', { required: true })}
               />
             </Form.Group>
+            <Form.Group className="text-center">
             <Button
               variant="primary"
               type="submit"
@@ -130,6 +131,7 @@ function TodoDetail() {
             >
               Submit
             </Button>
+            </Form.Group>
           </Form>
         </Col>
       </Row>
