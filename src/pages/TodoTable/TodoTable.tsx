@@ -57,12 +57,12 @@ function TodoTable() {
         processing={deleteStatus === LOADING}
         show={modalOpen || deleteStatus === LOADING}
       />
-      <Row>
+      <Row className="my-2">
         <Col>
           <h2>All todos</h2>
         </Col>
         <Col className="text-right">
-          <Form.Group className="form-element my-2">
+          <Form.Group className="form-element">
             <Link to="new">
               <Button variant="primary" type="submit">
                 New todo
@@ -75,30 +75,33 @@ function TodoTable() {
         <thead>
           <tr>
             <th>#</th>
-            <th>Title</th>
-            <th>Note</th>
-            <th>Done</th>
-            <th>Action</th>
+            <th className="text-center">Todo</th>
+            <th className="text-center">Toggle</th>
+            <th className="text-center">Actions</th>
           </tr>
         </thead>
         <tbody>
           {todos.map((v, i) => (
             <tr key={v.uuid}>
               <td className="align-middle">{i + 1}</td>
-              <td className="align-middle">{v.title}</td>
-              <td className="align-middle">{v.note}</td>
-              <td className="align-middle">{v.done ? 'Yes' : 'No'}</td>
+              <td className="align-middle">
+                {v.done ? <s><b>{v.title}</b></s> : <b>{v.title}</b>}
+                <br />
+                {v.done ? <s>{v.note}</s> : v.note}
+              </td>
               <td className="text-center align-middle">
                 <Button
                   size="sm"
-                  variant="outline-secondary"
+                  variant="outline-primary"
                   className="m-1"
                   disabled={updateStatus === LOADING}
                   data-testid={`toggle-btn-${v.uuid}`}
                   onClick={() => handleToggle(v)}
                 >
                   {v.done ? 'Undone' : 'Done'}
-                </Button>{' '}
+                </Button>
+              </td>
+              <td className="text-center align-middle">
                 <Link to={v.uuid} state={v}>
                   <Button size="sm" variant="outline-secondary" className="m-1">
                     Edit

@@ -14,14 +14,14 @@ faker.seed(1);
 let todoList = [
   {
     uuid: 'abc',
-    title: 'Lorem ipsum',
-    note: 'Note note note',
+    title: 'Go to art supply store',
+    note: 'Get there before it closing time which is 6PM',
     done: true,
   },
   {
     uuid: 'def',
-    title: 'Lorem ipsum dolor',
-    note: 'Note note note',
+    title: 'Buy a power bank',
+    note: 'A power bank with usb c port and wireless charge',
     done: false,
   },
 ];
@@ -41,7 +41,7 @@ app.get('/api/todos/:uuid', (req, res, next) => {
 
 app.post('/api/todos', (req, res, next) => {
   const schema = Joi.object().keys({
-    title: Joi.string().min(1).max(25).required(),
+    title: Joi.string().min(1).max(30).required(),
     note: Joi.string().allow('').optional(),
   });
   const { error: validationError } = Joi.validate(req.body, schema);

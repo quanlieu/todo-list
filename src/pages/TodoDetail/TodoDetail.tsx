@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import Container from 'react-bootstrap/Container';
 import Spinner from 'react-bootstrap/Spinner';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -94,41 +95,45 @@ function TodoDetail() {
   }
 
   return (
-    <Row>
-      <Col md={{ span: 6, offset: 3 }}>
-        <h2 className="mb-3 mt-3 text-center">
-          {uuid === 'new' ? 'New' : 'Edit'} Todo
-        </h2>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <Form.Group className="mb-3">
-            <Form.Label>Title</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Title"
-              data-testid="title-input"
-              {...register('title', { required: true })}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Note</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Note"
-              data-testid="note-input"
-              {...register('note', { required: true })}
-            />
-          </Form.Group>
-          <Button
-            variant="primary"
-            type="submit"
-            disabled={!formState.isValid || createUpdateStatus === LOADING}
-            data-testid="submit-btn"
-          >
-            Submit
-          </Button>
-        </Form>
-      </Col>
-    </Row>
+    <Container>
+      <Row>
+        <Col md={{ span: 6, offset: 3 }}>
+          <h2 className="mb-3 mt-3 text-center">
+            {uuid === 'new' ? 'New' : 'Edit'} Todo
+          </h2>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Form.Group className="mb-3">
+              <Form.Label>
+                Title <span className="text-danger">*</span>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Title"
+                data-testid="title-input"
+                {...register('title', { required: true })}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Note</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Note"
+                data-testid="note-input"
+                {...register('note', { required: true })}
+              />
+            </Form.Group>
+            <Button
+              variant="primary"
+              type="submit"
+              disabled={!formState.isValid || createUpdateStatus === LOADING}
+              data-testid="submit-btn"
+            >
+              Submit
+            </Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
